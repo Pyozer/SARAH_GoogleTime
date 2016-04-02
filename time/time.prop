@@ -1,0 +1,9 @@
+{
+  "modules" : { 
+    "time"  : {
+      "description": "Donne l'heure actuelle ou celle d'une ville/pays",
+      "name": "monsieur",
+      "version": "1.0"
+    }
+  }
+}

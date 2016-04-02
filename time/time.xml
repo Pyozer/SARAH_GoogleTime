@@ -1,0 +1,28 @@
+﻿<grammar version="1.0" xml:lang="fr-FR" mode="voice"  root="ruleTime" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+  <rule id="ruleTime" scope="public">
+    <example>Jarvis il est quelle heure ?</example>
+    <tag>out.action=new Object(); </tag>
+    
+    <item>Jarvis</item>
+    <one-of>
+      <!-- Permet d'avoir l'heure -->
+      <item>il est quelle heure<tag>out.action.time="gettime";</tag></item>
+      <item>il est quel heure<tag>out.action.time="gettime";</tag></item>
+      <item>quelle heure est il<tag>out.action.time="gettime";</tag></item>
+      <item>peux tu me donner l'heure<tag>out.action.time="gettime";</tag></item>
+      <item>tu peux me donner l'heure<tag>out.action.time="gettime";</tag></item>
+    </one-of>
+    <item repeat="0-1">
+        <one-of>
+          <item>à<tag>out.action.location="true";</tag></item>
+          <item>ah<tag>out.action.location="true";</tag></item>
+          <item>a<tag>out.action.location="true";</tag></item>
+          <item>de<tag>out.action.location="true";</tag></item>
+          <item>en<tag>out.action.location="true";</tag></item>
+        </one-of>
+        <ruleref special="GARBAGE" />
+    </item>
+
+    <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/time";</tag>
+  </rule>
+</grammar>

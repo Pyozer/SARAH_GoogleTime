@@ -11,6 +11,8 @@ exports.init = function () {
 
 exports.action = function(data, callback){
 
+  SARAH.context.scribe.activePlugin('Time');
+  
   config = Config.modules.time;
   /* Si pas de ville demandé */
   if(data.time && !data.location) {
@@ -34,8 +36,6 @@ exports.action = function(data, callback){
     FULL_RECO = SARAH.context.scribe.FULL_RECO;
     PARTIAL_RECO = SARAH.context.scribe.PARTIAL_RECO;
     TIME_ELAPSED = SARAH.context.scribe.TIME_ELAPSED;
-
-    SARAH.context.scribe.activePlugin('Time');
 
     var util = require('util');
     console.log("Time call log: " + util.inspect(data, { showHidden: true, depth: null }));

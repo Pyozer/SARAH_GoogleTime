@@ -19,7 +19,9 @@
           <item>a<tag>out.action.location="true";</tag></item>
           <item>de<tag>out.action.location="true";</tag></item>
           <item>en<tag>out.action.location="true";</tag></item>
+          <item>au<tag>out.action.location="true";</tag></item>
         </one-of>
+        
         <ruleref special="GARBAGE" />
     </item>
 

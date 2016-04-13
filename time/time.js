@@ -66,8 +66,8 @@ function checkScribe(event, action, callback) {
       decodeScribe(SARAH.context.scribe.lastPartial, callback);
     } else {
       SARAH.context.scribe.activePlugin('Aucun (Time)');
-      ScribeSpeak("Désolé je n'ai pas compris. Merci de réessayer.", true);
-      return callback();
+      //ScribeSpeak("Désolé je n'ai pas compris. Merci de réessayer.", true);
+      return callback({'tts': "Désolé je n'ai pas compris. Merci de réessayer."});
     }
   } else {
     // pas traité
@@ -77,12 +77,12 @@ function checkScribe(event, action, callback) {
 function decodeScribe(search, callback) {
 
   console.log("Search: " + search);
-  var rgxp = /(il est quelle heure|quelle heure est il|peux tu me donner l'heure|tu peux me donner l'heure|heure) (à|a|de|en) (.+)/i;
+  var rgxp = /(il est quelle heure|quelle heure est-il|peux tu me donner l'heure|tu peux me donner l'heure|heure) (à|a|de|en|au) (.+)/i;
   var match = search.match(rgxp);
 
   if (!match || match.length <= 1){
-    ScribeSpeak("Je ne comprends pas");
-    callback();
+    //ScribeSpeak("Je ne comprends pas");
+    callback({'tts': "Je ne comprends pas"});
     return;
   }
 
@@ -108,8 +108,8 @@ function getTimeLocation(callback, match) {
     request({ 'uri': url, 'headers': options, 'encoding': 'binary' }, function(error, response, html) {
 
 		if (error || response.statusCode != 200) {
-			ScribeSpeak("L'action a échoué");
-			callback();
+			//ScribeSpeak("L'action a échoué");
+			callback({'tts': "L'action a échoué"});
 			return;
 		}
 		var $ = cheerio.load(html);
@@ -125,8 +125,8 @@ function getTimeLocation(callback, match) {
 			var reponse = "Il est " + heure + " " + match[2].trim() + " " + onlycity.trim();
 		}
 
-		ScribeSpeak(reponse);
-		callback();
+		//ScribeSpeak(reponse);
+		callback({'tts': reponse});
 		return;
     });
 }

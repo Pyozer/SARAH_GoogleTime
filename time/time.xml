@@ -24,7 +24,7 @@
         
         <ruleref special="GARBAGE" />
     </item>
-
+    
     <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/time";</tag>
   </rule>
 </grammar>

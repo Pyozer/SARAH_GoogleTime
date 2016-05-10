@@ -16,22 +16,22 @@ exports.action = function(data, callback){
   config = Config.modules.time;
   /* Si pas de ville demandé */
   if(data.time && !data.location) {
-  	var name = config.name;
+    var name = config.name;
 
-  	var date = new Date();
+    var date = new Date();
 
-  	var text = "Il est " + date.getHours() + " heure ";
-  	if (date.getMinutes() > 0){ 
-  		text += date.getMinutes();
-  	}
-  	text += " " + name;
+    var text = "Il est " + date.getHours() + " heure";
+    if (date.getMinutes() > 0){ 
+      text += " " + date.getMinutes();
+    }
+    text += " " + name + ".";
 
-  	// Callback with TTS
-  	console.log("Heure: " + date.getHours() + "h" + date.getMinutes());
-  	callback({'tts': text});
+    // Callback with TTS
+    console.log("Heure: " + date.getHours() + "h" + date.getMinutes());
+    callback({'tts': text});
   } else { // On recherche pour la ville spécifié
 
-  	ScribeSpeak = SARAH.ScribeSpeak;
+    ScribeSpeak = SARAH.ScribeSpeak;
 
     FULL_RECO = SARAH.context.scribe.FULL_RECO;
     PARTIAL_RECO = SARAH.context.scribe.PARTIAL_RECO;
@@ -91,7 +91,7 @@ function decodeScribe(search, callback) {
 
 function getTimeLocation(callback, match) {
 
-	var location = match[3];
+  var location = match[3];
 
     var search = "il est quelle heure " + match[2] + " " + location;
     var url = "https://www.google.fr/search?q=" + encodeURI(search) + "&btnG=Rechercher&hl=fr&biw=&bih=&gbv=1";
@@ -107,26 +107,26 @@ function getTimeLocation(callback, match) {
 
     request({ 'uri': url, 'headers': options, 'encoding': 'binary' }, function(error, response, html) {
 
-		if (error || response.statusCode != 200) {
-			//ScribeSpeak("L'action a échoué");
-			callback({'tts': "L'action a échoué"});
-			return;
-		}
-		var $ = cheerio.load(html);
+    if (error || response.statusCode != 200) {
+      //ScribeSpeak("L'action a échoué");
+      callback({'tts': "L'action a échoué"});
+      return;
+    }
+    var $ = cheerio.load(html);
 
-		var heure = $('._Tsb._HOb._Qeb ._rkc._Peb').text().trim().replace(':', " heure ");
-		var description = $('._Tsb._HOb._Qeb span._HOb._Qeb').text().trim();
-		description = description.replace('Heure ', '').replace('(', '').replace(')', '');
-		var onlycity = description.split(',')[0];
+    var heure = $('._Tsb._HOb._Qeb ._rkc._Peb').text().trim().replace(':', " heure ");
+    var description = $('._Tsb._HOb._Qeb span._HOb._Qeb').text().trim();
+    description = description.replace('Heure ', '').replace('(', '').replace(')', '');
+    var onlycity = description.split(',')[0];
 
-		if(heure == "") {
-			var reponse = "Désolé, je n'ai pas pu avoir d'informations";
-		} else {
-			var reponse = "Il est " + heure + " " + match[2].trim() + " " + onlycity.trim();
-		}
+    if(heure == "") {
+      var reponse = "Désolé, je n'ai pas pu avoir d'informations";
+    } else {
+      var reponse = "Il est " + heure + " " + match[2].trim() + " " + onlycity.trim();
+    }
 
-		//ScribeSpeak(reponse);
-		callback({'tts': reponse});
-		return;
+    //ScribeSpeak(reponse);
+    callback({'tts': reponse});
+    return;
     });
 }
